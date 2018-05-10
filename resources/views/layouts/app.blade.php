@@ -23,6 +23,18 @@
     @include("layouts.nav")
 
     <main>
+        @if (session()->has('success'))
+            <div class="green darken-3 white-text text-center" id="popup_notification">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session()->has('error'))
+            <div class="red darken-3 white-text text-center" id="popup_notification">
+                {{ session('error') }}
+            </div>
+        @endif
+
         @yield('content')
     </main>
     @include("layouts.footer")
