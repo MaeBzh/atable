@@ -11,36 +11,38 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $nb_user = 10;
+        if (DB::table('users')->count() == 0) {
+            $nb_user = 10;
 
-        for ($i = 0; $i < $nb_user; $i++) {
+            for ($i = 0; $i < $nb_user; $i++) {
+                $user = new \App\User();
+                $user->nom = "nom{$i}";
+                $user->prenom = "prenom{$i}";
+                $user->pseudo = "pseudo{$i}";
+                $user->actif = true;
+                $user->email = "email{$i}@yopmail.com";
+                $user->password = bcrypt("password");
+
+                $role = \App\Role::membre();
+                $user->role()->associate($role);
+                $user->save();
+
+                event(new \App\Events\UserInscription($user));
+            }
+
             $user = new \App\User();
-            $user->nom = "nom{$i}";
-            $user->prenom = "prenom{$i}";
-            $user->pseudo = "pseudo{$i}";
+            $user->nom = "nom_admin";
+            $user->prenom = "prenom_admin";
+            $user->pseudo = "admin";
             $user->actif = true;
-            $user->email = "email{$i}@yopmail.com";
+            $user->email = "admin@yopmail.com";
             $user->password = bcrypt("password");
 
-            $role = \App\Role::membre();
+            $role = \App\Role::admin();
             $user->role()->associate($role);
             $user->save();
 
             event(new \App\Events\UserInscription($user));
         }
-
-        $user = new \App\User();
-        $user->nom = "nom_admin";
-        $user->prenom = "prenom_admin";
-        $user->pseudo = "admin";
-        $user->actif = true;
-        $user->email = "admin@yopmail.com";
-        $user->password = bcrypt("password");
-
-        $role = \App\Role::admin();
-        $user->role()->associate($role);
-        $user->save();
-
-        event(new \App\Events\UserInscription($user));
     }
 }

@@ -171,6 +171,9 @@ section{
     font-size: 1.2em;
     color: #c62828;
 }
+.icon-toque:before{
+    font-weight: bold;
+}
 
 .regular-radio {
     display: none;
@@ -223,10 +226,10 @@ section{
     font-size: 1em;
 }
 
-.ingredients ul{
-    list-style-type: none;
+
+.ingredients td{
     font-family: "Open Sans", sans-serif;
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 
 .etape{
@@ -235,15 +238,25 @@ section{
     padding-top: 2em;
 }
 
-.etape h2, .cuisson_etc h3{
+.etape h2, .infos_recette h3{
     font-family: Montserrat, sans-serif;
     font-size: 1em;
 }
 
-.etape p, .cuisson_etc span{
+.etape p, .infos_recette span{
     font-family: "Open Sans", sans-serif;
+}
+
+.etape hr{
+    width: 25%;
+    border-top : 2px solid  #c62828;
 }
 
 .titre_recette{
     font-family: "Lato Thin", sans-serif;
 }
+
+.row_haut_recette{
+    height: 50px;
+ }
+

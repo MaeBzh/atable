@@ -2,8 +2,8 @@
     <div class="container white-text">
         <a class="navbar-brand m-0" href="{{ url('/') }}">
             <div class="logo">
-                <h1><span class="icon-toque mr-3"></span><span class="atable"><span
-                                class="titre_first_letter">A  </span>TABLE !</span>
+                <h1><span class="icon-toque mr-3"></span>
+                    <span class="atable"><span class="titre_first_letter">A  </span>TABLE !</span>
                 </h1>
             </div>
         </a>

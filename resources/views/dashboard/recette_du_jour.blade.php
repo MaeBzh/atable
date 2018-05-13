@@ -2,13 +2,13 @@
     <!-- Card -->
     <div class="card">
         <div class="row align-items-center">
-            <div class="col-4">
+            <div class="col-12 col-md-5">
                 <!-- Card image -->
-                <img class="img-fluid" src="{{asset('img/tagliatelles_au_gorgonzola.jpg')}}">
+                <img class="img-fluid m-0" src="{{asset('img/tagliatelles_au_gorgonzola.jpg')}}">
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-7">
                 <!-- Card content -->
-                <div class="card-body px-3">
+                <div class="card-body p-0">
                     <!-- Title -->
                     <h4 class="card-title pt-4 pb-3 m-0"><a>La recette du jour</a></h4>
                     <!-- Text -->

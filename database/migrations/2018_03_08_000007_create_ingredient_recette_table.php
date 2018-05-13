@@ -17,7 +17,7 @@ class CreateIngredientRecetteTable extends Migration
             $table->unsignedInteger('ingredient_id');
             $table->unsignedInteger('recette_id');
             $table->unsignedInteger('quantite');
-            $table->enum('unite', ['l', 'cl', 'ml', 'kg', 'g', 'mg', 'CS', 'CC']);
+            $table->enum('unite', ['l', 'cl', 'ml', 'kg', 'g', 'mg', 'cs', 'cc']);
             $table->timestamps();
 
             $table->foreign('ingredient_id')->references('id')->on('ingredients');

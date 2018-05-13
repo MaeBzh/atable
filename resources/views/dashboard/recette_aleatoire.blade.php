@@ -1,6 +1,6 @@
 <section class="container elegant-color p-5">
-    <div class="card-deck">
-        <div class="card">
+    <div class="card-deck recettes_aleatoires">
+        <div class="card col-12 col-md-4 my-2 p-0">
             <!--Card image-->
             <img class="img-fluid" src="{{asset('img/tagliatelles_au_gorgonzola.jpg')}}">
             <!--Card image-->
@@ -18,7 +18,7 @@
             <!--Card-->
         </div>
 
-        <div class="card">
+        <div class="card col-12 col-md-4 my-2 p-0">
             <!--Card image-->
             <img class="img-fluid" src="{{asset('img/tagliatelles_au_gorgonzola.jpg')}}">
             <!--Card image-->
@@ -35,7 +35,7 @@
             <!--Card content-->
             <!--Card-->
         </div>
-        <div class="card">
+        <div class="card col-12 col-md-4 my-2 p-0">
             <!--Card image-->
             <img class="img-fluid" src="{{asset('img/tagliatelles_au_gorgonzola.jpg')}}">
             <!--Card image-->
