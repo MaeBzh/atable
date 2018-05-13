@@ -256,6 +256,11 @@ section{
     font-family: "Lato Thin", sans-serif;
 }
 
+.titre_recette_jour{
+    font-family: Lato, sans-serif;
+    color : #c62828;
+}
+
 .row_haut_recette{
     height: 50px;
  }

@@ -84,7 +84,7 @@
                     </div>
 
                 @endforeach
-                <div class="etape text-center">
+                <div class="etape text-center pb-5">
                     <h2>Conseil de présentation</h2>
                     <p>{{$recette->conseil_presentation}}</p>
                 </div>

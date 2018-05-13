@@ -17,6 +17,7 @@ Route::post('ajout_recette', 'RecetteController@traiterFormulaireAjoutRecette')-
 Route::get('ajout_etape_recette/{recette}', 'RecetteController@afficherFormulaireAjoutEtapeRecette')->name('ajout_etape_recette.get');
 Route::post('ajout_etape_recette/{recette}', 'RecetteController@traiterFormulaireAjoutEtapeRecette')->name('ajout_etape_recette.post');
 Route::get('consulter_recette/{recette}', 'RecetteController@afficherRecette')->name('consulter_recette.get');
+Route::post('search', 'RecetteController@chercherRecette')->name('search.post');
 
 Route::get('dashboard', 'UserController@afficherDashboard')->name('dashboard');
 Route::get('profil/{user}', 'UserController@afficherProfil')->name('profil');

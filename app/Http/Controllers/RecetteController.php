@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Etape;
 use App\Photo;
 use App\Recette;
+use App\RecetteDuJour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
 class RecetteController extends AuthController
@@ -18,13 +20,14 @@ class RecetteController extends AuthController
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => [
-            'index',
-            'afficherFormulaireAjoutRecette',
-            'traiterFormulaireAjoutRecette',
-            'afficherFormulaireAjoutEtapeRecette',
-            'traiterFormulaireAjoutEtapeRecette'
-        ]
+        $this->middleware('auth', [
+            'except' => [
+                'index',
+                'afficherFormulaireAjoutRecette',
+                'traiterFormulaireAjoutRecette',
+                'afficherFormulaireAjoutEtapeRecette',
+                'traiterFormulaireAjoutEtapeRecette'
+            ]
         ]);
     }
 
@@ -35,7 +38,8 @@ class RecetteController extends AuthController
      */
     public function index()
     {
-        return view('accueil');
+        return view('accueil')
+            ->with("recette_du_jour", RecetteDuJour::recetteDuJour());
     }
 
     /**
@@ -115,9 +119,8 @@ class RecetteController extends AuthController
             DB::commit();
             if ($request->submit == 'autre_etape') {
                 return redirect()->route('ajout_etape_recette.get', ['id' => $recette->id]);
-            }
-            else {
-                 return redirect()->route('dashboard')->withSuccess('Votre recette a bien été enregistrée !');
+            } else {
+                return redirect()->route('dashboard')->withSuccess('Votre recette a bien été enregistrée !');
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -127,14 +130,19 @@ class RecetteController extends AuthController
         }
     }
 
-    public
-    function afficherRecette(Recette $recette)
-    {
+    public function afficherRecette(Recette $recette) {
         return view("consulter_recette")
             ->with('recette', $recette);
     }
 
-    public function randomRecette(){
-
+    public function chercherRecette()
+    {
+        $q = Input::get('search');
+        $recettes = Recette::where('titre', 'LIKE', '%' . $q . '%')->get();
+        if (count($recettes) > 0) {
+            return view('resultats_recherche')->with('recettes', $recettes)->withQuery($q);
+        } else {
+            return view('resultats_recherche')->withMessage('Aucune recette ne correspond à votre recherche!');
+        }
     }
 }

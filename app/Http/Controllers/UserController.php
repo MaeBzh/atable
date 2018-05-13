@@ -24,17 +24,13 @@ class UserController extends AuthController
      */
     public function index()
     {
-        return view('accueil');
+        return view('accueil')
+            ->with("recette_du_jour", RecetteDuJour::recetteDuJour());
     }
 
     public function afficherDashboard()
     {
-        // TODO verifier si kle test marche avec une date sans H:i:s
-
-
-        dd(RecetteDuJour::recetteDuJour(), Recette::recettesRandom(3));
-
-        return view('dashboard')
+        return view('dashboard/dashboard')
             ->with("recette_du_jour", RecetteDuJour::recetteDuJour())
             ->with("recettes", Recette::recettesRandom(3));
     }

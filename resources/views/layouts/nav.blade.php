@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark navbar-laravel elegant-color " style="z-index:1">
     <div class="container white-text">
-        <a class="navbar-brand m-0" href="{{ url('/') }}">
+        <a class="navbar-brand m-0" href="{{route('dashboard')}}">
             <div class="logo">
                 <h1><span class="icon-toque mr-3"></span>
                     <span class="atable"><span class="titre_first_letter">A  </span>TABLE !</span>
@@ -14,9 +14,11 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+
             <form class="md-form active-red active-red-2 mb-3 mt-0 form-sm w-100 ml-auto mr-auto px-4"
-                  id="navbarSearchForm">
-                <input class="form-control w-100" type="text" placeholder="Chercher une recette">
+                  id="navbarSearchForm" action="{{ route('search.post') }}" method="post">
+                @csrf
+                <input class="form-control w-100" type="text" placeholder="Chercher une recette" name="search">
                 {{--<i class="fa fa-search" aria-hidden="true"></i>--}}
             </form>
 
