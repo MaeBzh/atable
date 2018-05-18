@@ -6,17 +6,17 @@
  */
 
 require('./bootstrap');
+require('./navbar.search.js');
 
-window.Vue = require('vue');
+// Affichage des tooltips au survol de la souris
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
+// Surcharge de l'input type='file' de bootstrap pour afficher le nom de l'image dans un input text
+$(document).ready(function () {
+    $('.custom-file-input').on('change', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('.custom-file-label').html(fileName? fileName : "Choisissez un fichier");
+    });
 });

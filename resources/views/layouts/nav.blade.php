@@ -18,7 +18,7 @@
             <form class="md-form active-red active-red-2 mb-3 mt-0 form-sm w-100 ml-auto mr-auto px-4"
                   id="navbarSearchForm" action="{{ route('search.post') }}" method="post">
                 @csrf
-                <input class="form-control w-100" type="text" placeholder="Chercher une recette" name="search">
+                <input class="form-control w-100" type="text" placeholder="Chercher une recette" name="search" autocomplete="on">
                 {{--<i class="fa fa-search" aria-hidden="true"></i>--}}
             </form>
 

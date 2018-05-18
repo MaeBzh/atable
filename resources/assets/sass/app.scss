@@ -1,6 +1,10 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:light');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 // Variables
 @import "variables";
@@ -8,7 +12,295 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import '~mdbootstrap/scss/mdb';
+
+// colors
+
+$red: #c62828;
+$grey_light: #f5f5f5;
+
+
+//fonts
+
+
+$font-text: "Open Sans", sans-serif;
+$font-text-light :"Open Sans Light", sans-serif;
+$font-titre: "Lato", sans-serif;
+$font-sous-titre: "Montserrat", sans-serif;
+
+//navbar
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+#navbarSearchForm .waves-input-wrapper {
+  width: 100%;
+}
+
+.atable, .navbar li, .navbar input{
+  font-family:  $font-text-light;
+  letter-spacing: 0.1em;
+}
+
+.titre_first_letter{
+  color: $red;
+}
+
+.navbar-dark  .navbar-nav .nav-link{
+  color: $grey_light;
+  margin: 0 10px;
+}
+
+.active-red-2 input[type=text]:focus:not([readonly]) {
+  border-bottom: 1px solid $red     ;
+  box-shadow: 0 1px 0 0 $red    ;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus{
+  color: $red;
+}
+
+.lien_nav{
+  white-space: nowrap;
+}
+
+//main
+
+main{
+  background-image: url("/img/image_fond_floue.jpg");
+  background-size: contain;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: Montserrat;
+}
+
+#app {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+}
+
+.z-depth-1-top{
+  -moz-box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.16), 0 -2px 10px 0 rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow:0 -2px 5px 0 rgba(0, 0, 0, 0.16), 0 -2px 10px 0 rgba(0, 0, 0, 0.12);
+  -o-box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.16), 0 -2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.16), 0 -2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+}
+
+//affichage recette
+
+.etape{
+  text-align: left;
+  padding-left: 3em;
+  padding-top: 2em;
+  h2{
+    font-family: Montserrat, sans-serif;
+    font-size: 1em;
+  }
+  p{
+    font-family: $font-text;
+  }
+  hr{
+    width: 25%;
+    border-top : 2px solid $red;
+  }
+}
+
+.ingredients{
+  h2 {
+    font-family: $font-sous-titre;
+    font-size: 1em;
+  }
+  td{
+    font-family: $font-text;
+    font-size: 0.7em;
+  }
+}
+
+
+
+
+
+
+.edit_button{
+  border : none;
+  background-color: transparent;
+}
+
+.fa-edit{
+  color: $red;
+  font-size: 1.5em;
+}
+
+.edit_button:focus{
+  outline : none;
+}
+
+/* accueil */
+
+.recette_jour, .recette_jour:hover{
+  padding: 0;
+  color: white;
+}
+
+.texte_recette_jour {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  padding: 20px 0;
+  font-family: $font-text-light;
+  h2{
+    letter-spacing: 0.2em;
+  }
+}
+
+
+/* dashbpard */
+
+.btn-outline-default{
+  border: 2px solid $red !important;
+  color: $red !important;
+}
+
+.card-title{
+  padding: 1em 0;
+  font-family: $font-text-light;
+  font-size: 2em;
+  color: $red !important;
+}
+
+.custom-file-label:after{
+  content: "Parcourir";
+  background-color: $red;
+  color: $grey_light;
+}
+
+.btn-red{
+  background-color: $red !important;
+}
+
+.tooltip-inner {
+  background-color: $red !important;
+  /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
+  color: $grey_light;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: $red !important;
+}
+
+.form-control:focus {
+  border-color: $red;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+/* boutons radio */
+
+.difficulte{
+  width: 193px;
+}
+
+.icone_difficulte{
+  font-size: 1.5em;
+  color: $red;
+}
+
+.icone_prix{
+  padding: 0 10px;
+  font-size: 1.2em;
+  color: $red;
+}
+.icon-toque:before{
+  font-weight: bold;
+}
+
+.regular-radio {
+  display: none;
+}
+
+.regular-radio + label {
+  -webkit-appearance: none;
+  background-color:  $grey_light;
+  border: 2px solid $red;
+  /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);*/
+  padding: 9px;
+  margin: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+}
+
+.regular-radio:checked + label {
+  background-color: $red;
+  border: 1px solid $red;
+  /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);*/
+}
+
+.regular-radio + label:active, .regular-radio:checked + label:active {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.regular-radio:checked + label > span {
+  color: white;
+}
+
+.red-border textarea {
+  border: 1px solid $red;
+}
+
+/*Consultation recette */
+
+.fond_recette{
+  background-image: url("/img/fond_recette.png");
+}
+
+.fiche_recette{
+  position: fixed;
+  bottom: 0;
+  top: 5em;
+}
+
+
+
+
+.infos_recette
+h3{
+  font-family: Montserrat, sans-serif;
+  font-size: 1em;
+}
+
+.infos_recette span{
+  font-family: "Open Sans", sans-serif;
+}
+
+.titre_recette{
+  font-family: "Lato Thin", sans-serif;
+}
+
+.titre_recette_jour{
+  font-family: Lato, sans-serif;
+  color : #c62828;
+}
+
+.row_haut_recette{
+  height: 50px;
+}
+
+
