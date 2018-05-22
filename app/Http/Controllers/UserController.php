@@ -30,7 +30,7 @@ class UserController extends AuthController
 
     public function afficherDashboard()
     {
-        return view('dashboard/dashboard')
+        return view('dashboard/membre/dashboard_membre')
             ->with("recette_du_jour", RecetteDuJour::recetteDuJour())
             ->with("recettes", Recette::recettesRandom(3));
     }

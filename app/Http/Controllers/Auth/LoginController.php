@@ -27,8 +27,6 @@ class LoginController extends Controller
      * @var string
      */
 
-    protected $redirectTo = '/dashboard';
-
     /**
      * Create a new controller instance.
      *
@@ -50,7 +48,15 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('accueil');
+        return redirect('/accueil');
     }
 
+    public function redirectTo()
+    {
+        if (\Auth::user()->isAdmin()) {
+            return config("app.admin_default_route", "/admin/stats/recettes");
+        } else {
+            return "/dashboard";
+        }
+    }
 }

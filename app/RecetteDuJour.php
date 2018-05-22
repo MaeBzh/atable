@@ -37,4 +37,5 @@ class RecetteDuJour extends Model
         }
         return $recette_du_jour;
     }
+
 }

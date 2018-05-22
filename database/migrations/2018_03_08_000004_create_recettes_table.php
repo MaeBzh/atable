@@ -23,10 +23,17 @@ class CreateRecettesTable extends Migration
             $table->time('temps_cuisson');
             $table->time('temps_preparation');
             $table->text('conseil_presentation')->nullable();
+
             $table->unsignedInteger('auteur_id');
+            $table->foreign('auteur_id')->references('id')->on('users');
+
+            $table->unsignedInteger('categorie_id');
+            $table->foreign('categorie_id')->references('id')->on('categories');
+
             $table->timestamps();
 
-            $table->foreign('auteur_id')->references('id')->on('users');
+
+
         });
     }
 

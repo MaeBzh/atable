@@ -1,4 +1,4 @@
-<section class="container elegant-color p-5">
+<section class="container elegant-color px-5 pb-5 ">
     <div class="card-deck recettes_aleatoires">
         @foreach($recettes as $recette)
         <div class="card col-12 col-md-4 my-2 p-0">
@@ -8,7 +8,9 @@
             <!--Card content-->
             <div class="card-body">
                 <!--Title-->
-                <h4 class="card-title">{{$recette->titre}}</h4>
+                <h4 class="card-title titre_categorie py-2">{{$recette->categorie->libelle_categorie}}</h4>
+                <h5 class="titre_recette py-2">{{$recette->titre}}</h5>
+                <h6>Ajoutée par <span class="auteur">{{$recette->auteur->pseudo}}</span></h6>
                 <!--Text-->
                 <p class="card-text">Some quick example text to build on the card title and make up
                     the bulk of the card's content.</p>

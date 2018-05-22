@@ -1,3 +1,5 @@
+$fa-font-path: "../../../node_modules/font-awesome/fonts" !default;
+@import "~font-awesome/scss/font-awesome.scss";
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
@@ -17,15 +19,16 @@
 // colors
 
 $red: #c62828;
-$grey_light: #f5f5f5;
-
+$light_grey: #f5f5f5;
+$dark_grey: #2e2e2e;
+$blue: #1a698b;
 
 //fonts
 
 
 $font-text: "Open Sans", sans-serif;
 $font-text-light :"Open Sans Light", sans-serif;
-$font-titre: "Lato", sans-serif;
+$font-titre: "Lato Thin", sans-serif;
 $font-sous-titre: "Montserrat", sans-serif;
 
 //navbar
@@ -49,7 +52,7 @@ $font-sous-titre: "Montserrat", sans-serif;
 }
 
 .navbar-dark  .navbar-nav .nav-link{
-  color: $grey_light;
+  color: $light_grey;
   margin: 0 10px;
 }
 
@@ -69,8 +72,8 @@ $font-sous-titre: "Montserrat", sans-serif;
 //main
 
 main{
-  background-image: url("/img/image_fond_floue.jpg");
-  background-size: contain;
+  background-image: url("/img/image_fond.jpg");
+  background-size: cover;
 }
 
 html, body {
@@ -131,8 +134,20 @@ section{
   }
 }
 
+.auteur{
+  font-style: oblique;
+  color: $red;
+}
 
+.details_recette_jour{
+  font-size: 0.8em;
+}
 
+.titre_categorie{
+  font-family: $font-titre;
+  font-size: 2em;
+  color: $blue;
+}
 
 
 
@@ -172,7 +187,7 @@ section{
 }
 
 
-/* dashbpard */
+/* dashboard */
 
 .btn-outline-default{
   border: 2px solid $red !important;
@@ -183,13 +198,13 @@ section{
   padding: 1em 0;
   font-family: $font-text-light;
   font-size: 2em;
-  color: $red !important;
+  color: $blue !important;
 }
 
 .custom-file-label:after{
   content: "Parcourir";
   background-color: $red;
-  color: $grey_light;
+  color: $light_grey;
 }
 
 .btn-red{
@@ -199,7 +214,7 @@ section{
 .tooltip-inner {
   background-color: $red !important;
   /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
-  color: $grey_light;
+  color: $light_grey;
 }
 
 .tooltip.left .tooltip-arrow {
@@ -237,7 +252,7 @@ section{
 
 .regular-radio + label {
   -webkit-appearance: none;
-  background-color:  $grey_light;
+  background-color:  $light_grey;
   border: 2px solid $red;
   /*box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);*/
   padding: 9px;
@@ -263,6 +278,13 @@ section{
 
 .red-border textarea {
   border: 1px solid $red;
+}
+
+//profil
+
+.profil{
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
 }
 
 /*Consultation recette */
@@ -292,15 +314,51 @@ h3{
 
 .titre_recette{
   font-family: "Lato Thin", sans-serif;
-}
-
-.titre_recette_jour{
-  font-family: Lato, sans-serif;
-  color : #c62828;
+  color : $red;
 }
 
 .row_haut_recette{
   height: 50px;
 }
 
+
+//dashboard admin
+
+.dashboard_admin{
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  background-color: $light_grey;
+  a{
+    color: $light_grey;
+  }
+  a:hover{
+    color: $dark_grey;
+  }
+}
+
+.menu_admin{
+  background-color: $red;
+  ul{
+    color: $light_grey;
+    list-style: none;
+  }
+  li{
+    font-family: $font-text;
+  }
+  h4{
+    font-family: $font-titre;
+    color: $light_grey;
+    border-bottom: 1px $light_grey solid;
+  }
+}
+
+.titre_dashboard_admin{
+  background-color: $blue;
+  color: $light_grey;
+  font-family: $font-titre;
+}
+
+.details_dashboard_admin{
+  background-color: $light_grey;
+}
 

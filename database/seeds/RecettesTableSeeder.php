@@ -29,6 +29,7 @@ class RecettesTableSeeder extends Seeder
         for ($i = 0; $i < $nb_recette; $i++) {
 
             $user = \App\User::inRandomOrder()->first();
+            $categorie = App\Categorie::inRandomOrder()->first();
 
             if(!Storage::disk('public')->exists("user_{$user->id}/photo_recette.jpg")) {
                 Storage::disk('public')->copy("seed/photo_recette.jpg", "user_{$user->id}/photo_recette.jpg");
@@ -45,6 +46,7 @@ class RecettesTableSeeder extends Seeder
             $recette->conseil_presentation = "Un conseil de présentation super utile";
 
             $recette->auteur()->associate($user);
+            $recette->categorie()->associate($categorie);
             $recette->save();
 
             $unites = [
@@ -65,10 +67,6 @@ class RecettesTableSeeder extends Seeder
                     'unite' => $unites[rand(0, count($unites) - 1)]
                 ]);
             }
-
-            $categorie = \App\Categorie::whereNotNull("categorie_id")->inRandomOrder()->first();
-
-            $recette->categorie()->associate($categorie);
 
         }
     }

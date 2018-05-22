@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 require('./navbar.search.js');
+require('./profil.edit.js');
 
 // Affichage des tooltips au survol de la souris
 $(function () {

@@ -38,3 +38,14 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+//admin
+//TODO authorize if admin
+Route::prefix('admin')->group(function(){
+    Route::get('gestion/utilisateurs', 'AdminController@afficherGestionUtilisateurs')->name('admin.gestion.utilisateurs.get');
+    Route::get('gestion/categories', 'AdminController@afficherGestionCategories')->name('admin.gestion.categories.get');
+    Route::get('gestion/recettes', 'AdminController@afficherGestionRecettes')->name('admin.gestion.recettes.get');
+    Route::get('gestion/ingredients', 'AdminController@afficherGestionIngredients')->name('admin.gestion.ingredients.get');
+    Route::get('stats/utilisateurs', 'AdminController@afficherStatsUtilisateurs')->name('admin.stats.utilisateurs.get');
+    Route::get('stats/recettes', 'AdminController@afficherStatsRecettes')->name('admin.stats.recettes.get');
+});

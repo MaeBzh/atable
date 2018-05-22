@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-md navbar-dark navbar-laravel elegant-color " style="z-index:1">
     <div class="container white-text">
-        <a class="navbar-brand m-0" href="{{route('dashboard')}}">
+        <a class="navbar-brand m-0"
+           href="@if(\Auth::guest()) {{route('accueil')}}
+           @elseif(\Auth::user()->isAdmin()) {{ route('admin.gestion.utilisateurs.get') }}
+           @else {{ route('dashboard') }}
+           @endif">
             <div class="logo">
                 <h1><span class="icon-toque mr-3"></span>
                     <span class="atable"><span class="titre_first_letter">A  </span>TABLE !</span>
@@ -18,7 +22,8 @@
             <form class="md-form active-red active-red-2 mb-3 mt-0 form-sm w-100 ml-auto mr-auto px-4"
                   id="navbarSearchForm" action="{{ route('search.post') }}" method="post">
                 @csrf
-                <input class="form-control w-100" type="text" placeholder="Chercher une recette" name="search" autocomplete="on">
+                <input class="form-control w-100" type="text" placeholder="Chercher une recette" name="search"
+                       autocomplete="on">
                 {{--<i class="fa fa-search" aria-hidden="true"></i>--}}
             </form>
 
@@ -33,11 +38,12 @@
                            href="{{ route('register') }}">Inscription</a>
                     </li>
                 @else
-                    <li><a class="nav-link lien_nav @if(Route::is('ajout_recette.*')) active @endif" id="ajout_recette"
-                           href="{{ route('ajout_recette.get') }}">Ajouter une
-                            recette</a></li>
-
-
+                    @if(\Auth::user()->isMembre())
+                        <li><a class="nav-link lien_nav @if(Route::is('ajout_recette.*')) active @endif"
+                               id="ajout_recette"
+                               href="{{ route('ajout_recette.get') }}">Ajouter une
+                                recette</a></li>
+                    @endif
                     <li class="dropdown">
                         <a class="dropdown-toggle nav-link lien_nav" id="dropdownMenu4" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
@@ -49,10 +55,9 @@
                                 <a class="dropdown-item" href="{{route('profil', ['user_id' => Auth::user()->id])}}">Mon
                                     profil</a>
                                 <a class="dropdown-item" href="#">Mes recettes</a>
-                            @else
-                                <a class="dropdown-item" href="#">Espace administration</a>
+                                <div class="dropdown-divider"></div>
                             @endif
-                            <div class="dropdown-divider"></div>
+
                             <a class="dropdown-item " href="{{ route('logout') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 Déconnexion

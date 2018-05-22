@@ -18,7 +18,13 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7",
-        "mdbootstrap": "^4.5.2"
+        "mdbootstrap": "^4.5.2",
+        "@fortawesome/fontawesome": "^1.1.8",
+        "@fortawesome/fontawesome-free-brands": "^5.0.13",
+        "@fortawesome/fontawesome-free-regular": "^5.0.13",
+        "@fortawesome/fontawesome-free-solid": "^5.0.13"
     },
-    "dependencies": {}
+    "dependencies": {
+        "font-awesome": "^4.7.0"
+    }
 }
