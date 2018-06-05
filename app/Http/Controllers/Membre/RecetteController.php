@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Membre;
 
 use App\Etape;
+use App\Http\Controllers\Controller;
 use App\Photo;
 use App\Recette;
 use App\RecetteDuJour;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
-class RecetteController extends AuthController
+class RecetteController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,41 +23,60 @@ class RecetteController extends AuthController
     {
         $this->middleware('auth', [
             'except' => [
-                'index',
-                'afficherFormulaireAjoutRecette',
-                'traiterFormulaireAjoutRecette',
-                'afficherFormulaireAjoutEtapeRecette',
-                'traiterFormulaireAjoutEtapeRecette'
+                'afficherRecette',
+                'chercherRecette'
             ]
         ]);
     }
 
     /**
-     * Show the application dashboard.
+     * Affiche le detail de la recette
      *
-     * @return \Illuminate\Http\Response
+     * @param Recette $recette
+     * @return $this
      */
-    public function index()
+    public function afficherRecette(Recette $recette)
     {
-        return view('accueil')
-            ->with("recette_du_jour", RecetteDuJour::recetteDuJour());
+        return view("commun.consulter_recette")
+            ->with('recette', $recette);
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Affiche la liste des recettes dont le titre correspond à la recherche
+     *
+     * @param Request $request
+     * @return $this
      */
-    public function afficherFormulaireAjoutRecette()
+    public function rechercherRecette(Request $request)
     {
-        return view('ajout_recette');
+        $search = $request->get('search', "");
+
+        $recettes = Recette::where('titre', 'LIKE', '%' . $search . '%')->get();
+
+        return view('commun.resultats_recherche_recette')
+            ->with('recettes', $recettes)
+            ->with('search', $search);
     }
 
     /**
+     * Affiche le formulaire de création d'une nouvelle recette
+     *
+     * @return \Illuminate\View\View
+     */
+    public function afficherCreerRecette()
+    {
+        return view('membre.recettes.creer_recette');
+    }
+
+    /**
+     * Création d'une nouvelle recette
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      * @throws \Throwable
      */
-    public function traiterFormulaireAjoutRecette(Request $request)
+    public function creerRecette(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -71,28 +91,39 @@ class RecetteController extends AuthController
             $recette->temps_cuisson = $request->temps_cuisson;
             $recette->difficulte = $request->difficulte;
             $recette->prix = $request->prix;
+
             $recette->auteur()->associate(\Auth::user());
+            $recette->categorie()->associate($request->categorie);
+
             $recette->saveOrFail();
 
             DB::commit();
-            // return view success
+            \Session::flash("success", "Recette ajoutée avec succès");
+
+            return redirect()->route('recettes.etapes.ajout', [
+                'recette' => $recette
+            ]);
         } catch (\Exception $e) {
             DB::rollback();
+            // Si une erreur est survenue mais que le fichier a été sauvegardé, on le supprime
             if (!empty($chemin) && Storage::exists($chemin)) {
                 Storage::delete($chemin);
             }
-            // return view error
+            \Session::flash("error", "Une erreur est survenue ({$e->getMessage()}");
+
+            return redirect()->back()->withInput();
         }
-        return redirect()->route('ajout_etape_recette.get', ['id' => $recette->id]);
+
+
     }
 
     /**
      * @param Recette $recette
      * @return $this
      */
-    public function afficherFormulaireAjoutEtapeRecette(Recette $recette)
+    public function afficherCreerEtape(Recette $recette)
     {
-        return view('ajout_etape_recette')
+        return view('membre.recettes.creer_etape')
             ->with('recette', $recette);
     }
 
@@ -103,7 +134,7 @@ class RecetteController extends AuthController
      * @throws \Exception
      * @throws \Throwable
      */
-    public function traiterFormulaireAjoutEtapeRecette(Recette $recette, Request $request)
+    public function creerEtape(Recette $recette, Request $request)
     {
         DB::beginTransaction();
         try {
@@ -117,32 +148,29 @@ class RecetteController extends AuthController
             $etape->recette()->associate($recette);
             $etape->saveOrFail();
             DB::commit();
+
+            \Session::flash("success", "Votre étape à bien été ajoutée à la recette {$recette->titre}");
+
+            // Le formulaire propose d'ajouter une nouvelle étape
+            // ou de finaliser la recette
             if ($request->submit == 'autre_etape') {
-                return redirect()->route('ajout_etape_recette.get', ['id' => $recette->id]);
+                return redirect()->route('recettes.etapes.ajout', [
+                    'recette' => $recette
+                ]);
             } else {
-                return redirect()->route('dashboard')->withSuccess('Votre recette a bien été enregistrée !');
+                \Session::flash("success", "Votre recette {$recette->titre} est désormais en ligne");
+                return redirect()->route('accueil');
             }
         } catch (\Exception $e) {
             DB::rollback();
             if (!empty($chemin) && Storage::exists($chemin)) {
                 Storage::delete($chemin);
             }
-        }
-    }
+            \Session::flash("error", "Une erreur est survenue");
 
-    public function afficherRecette(Recette $recette) {
-        return view("consulter_recette")
-            ->with('recette', $recette);
-    }
-
-    public function chercherRecette()
-    {
-        $q = Input::get('search');
-        $recettes = Recette::where('titre', 'LIKE', '%' . $q . '%')->get();
-        if (count($recettes) > 0) {
-            return view('resultats_recherche')->with('recettes', $recettes)->withQuery($q);
-        } else {
-            return view('resultats_recherche')->withMessage('Aucune recette ne correspond à votre recherche!');
+            return redirect()->route("recettes.etapes.ajout", [
+                "recette" => $recette
+            ]);
         }
     }
 }

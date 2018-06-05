@@ -48,15 +48,15 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('/accueil');
+        return redirect()->route("accueil");
     }
 
     public function redirectTo()
     {
         if (\Auth::user()->isAdmin()) {
-            return config("app.admin_default_route", "/admin/stats/recettes");
+            return "/admin/gestion/utilisateurs";
         } else {
-            return "/dashboard";
+            return "/accueil";
         }
     }
 }

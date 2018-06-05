@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Recette;
+use App\RecetteDuJour;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -22,7 +15,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('accueil');
-    }
+        $recette_du_jours = RecetteDuJour::recetteDuJour();
 
+        // Si la personne qui consulte l'accueil n'est pas connecté
+        // On affiche la version invite de l'accueil,
+        // Sinon on affiche la version membre de l'accueil
+        if (\Auth::guest()) {
+            return view('invite.accueil')
+                ->with("recette_du_jour", $recette_du_jours);
+        } else {
+            return view('membre.accueil.accueil')
+                ->with('recette_du_jour', $recette_du_jours)
+                ->with('recettes_aleatoires', Recette::recettesRandom(3));
+        }
+    }
 }

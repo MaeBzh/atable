@@ -29,7 +29,10 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
 
+        Route::pattern('recette', '[0-9]+');
         Route::model("recette", Recette::class);
+
+        Route::pattern('user', '[0-9]+');
         Route::model("user", User::class);
     }
 
@@ -44,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAuthRoutes();
     }
 
     /**
@@ -59,6 +62,18 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "auth" routes for the application.
+     *
+     * @return void
+     */
+    protected function mapAuthRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/auth.php'));
     }
 
     /**

@@ -19,7 +19,10 @@ class CreateRecetteDuJourTable extends Migration
             $table->date("date");
             $table->timestamps();
 
-            $table->foreign('recette_id')->references('id')->on('recettes');
+            $table->foreign('recette_id')
+                ->references('id')
+                ->on('recettes')
+                ->onDelete('cascade');
         });
 
     }

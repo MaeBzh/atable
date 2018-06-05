@@ -13,7 +13,7 @@
                 </h4>
             </div>
             <div class="card-body grey lighten-4 p-5">
-                <form method="POST" action="{{ route('update_profil.post') }}">
+                <form method="POST" action="{{ route('profil.post', ['user', Auth::user()]) }}">
                     @csrf
                     <div class="form-group row">
                         <label for="edit_profil_nom" class="col-form-label col-5 py-2 text-right">Nom :</label>

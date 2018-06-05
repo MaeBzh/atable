@@ -1,10 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-dark navbar-laravel elegant-color " style="z-index:1">
     <div class="container white-text">
-        <a class="navbar-brand m-0"
-           href="@if(\Auth::guest()) {{route('accueil')}}
-           @elseif(\Auth::user()->isAdmin()) {{ route('admin.gestion.utilisateurs.get') }}
-           @else {{ route('dashboard') }}
-           @endif">
+        <a class="navbar-brand m-0" href="@if(\Auth::check() && \Auth::user()->isAdmin() == false){{route('accueil')}} ?
+           {{ route('admin.gestion.utilisateurs') }}
+        @endif">
             <div class="logo">
                 <h1><span class="icon-toque mr-3"></span>
                     <span class="atable"><span class="titre_first_letter">A  </span>TABLE !</span>
@@ -20,10 +18,10 @@
 
 
             <form class="md-form active-red active-red-2 mb-3 mt-0 form-sm w-100 ml-auto mr-auto px-4"
-                  id="navbarSearchForm" action="{{ route('search.post') }}" method="post">
+                  id="navbarSearchForm" action="{{ route('recettes.rechercher.post') }}" method="post">
                 @csrf
                 <input class="form-control w-100" type="text" placeholder="Chercher une recette" name="search"
-                       autocomplete="on">
+                       autocomplete="on" value="@if(!empty($search)){{ $search }}@endif">
                 {{--<i class="fa fa-search" aria-hidden="true"></i>--}}
             </form>
 
@@ -39,9 +37,9 @@
                     </li>
                 @else
                     @if(\Auth::user()->isMembre())
-                        <li><a class="nav-link lien_nav @if(Route::is('ajout_recette.*')) active @endif"
+                        <li><a class="nav-link lien_nav @if(Route::is('recettes.ajout*')) active @endif"
                                id="ajout_recette"
-                               href="{{ route('ajout_recette.get') }}">Ajouter une
+                               href="{{ route('recettes.ajout') }}">Ajouter une
                                 recette</a></li>
                     @endif
                     <li class="dropdown">
@@ -52,17 +50,17 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
 
                             @if(\Auth::user()->isMembre())
-                                <a class="dropdown-item" href="{{route('profil', ['user_id' => Auth::user()->id])}}">Mon
+                                <a class="dropdown-item" href="{{route('profil', ['user' => Auth::user()])}}">Mon
                                     profil</a>
                                 <a class="dropdown-item" href="#">Mes recettes</a>
                                 <div class="dropdown-divider"></div>
                             @endif
 
-                            <a class="dropdown-item " href="{{ route('logout') }}"
+                            <a class="dropdown-item " href="{{ route('logout.post') }}"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 Déconnexion
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            <form id="logout-form" action="{{ route('logout.post') }}" method="POST"
                                   style="display: none;">
                                 @csrf
                             </form>

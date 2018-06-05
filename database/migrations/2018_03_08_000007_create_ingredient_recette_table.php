@@ -20,8 +20,15 @@ class CreateIngredientRecetteTable extends Migration
             $table->enum('unite', ['l', 'cl', 'ml', 'kg', 'g', 'mg', 'cs', 'cc']);
             $table->timestamps();
 
-            $table->foreign('ingredient_id')->references('id')->on('ingredients');
-            $table->foreign('recette_id')->references('id')->on('recettes');
+            $table->foreign('ingredient_id')
+                ->references('id')
+                ->on('ingredients')
+                ->onDelete('cascade');
+
+            $table->foreign('recette_id')
+                ->references('id')
+                ->on('recettes')
+                ->onDelete('cascade');
 
             $table->primary(['ingredient_id', 'recette_id']);
         });

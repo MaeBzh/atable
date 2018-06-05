@@ -25,6 +25,7 @@
         "@fortawesome/fontawesome-free-solid": "^5.0.13"
     },
     "dependencies": {
+        "datatables.net-bs4": "^1.10.16",
         "font-awesome": "^4.7.0"
     }
 }

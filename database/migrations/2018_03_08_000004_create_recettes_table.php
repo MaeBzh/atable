@@ -25,10 +25,16 @@ class CreateRecettesTable extends Migration
             $table->text('conseil_presentation')->nullable();
 
             $table->unsignedInteger('auteur_id');
-            $table->foreign('auteur_id')->references('id')->on('users');
+            $table->foreign('auteur_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->unsignedInteger('categorie_id');
-            $table->foreign('categorie_id')->references('id')->on('categories');
+            $table->foreign('categorie_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('restrict');
 
             $table->timestamps();
 

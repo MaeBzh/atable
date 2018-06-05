@@ -84,6 +84,7 @@ class Recette extends Model
     {
         return $this->hasMany(RecetteDuJour::class);
     }
+
     public static function recettesRandom($limit){
         $query = Recette::orderByRaw("RAND()")->limit($limit);
         return $limit == 1 ? $query->first() : $query->get();

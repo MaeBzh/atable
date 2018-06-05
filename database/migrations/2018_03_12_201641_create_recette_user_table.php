@@ -18,8 +18,15 @@ class CreateRecetteUserTable extends Migration
             $table->unsignedInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('recette_id')->references('id')->on('recettes');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('recette_id')
+                ->references('id')
+                ->on('recettes')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->primary(['recette_id', 'user_id']);
         });

@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body grey lighten-4">
-                <form method="POST" action="{{ route('ajout_etape_recette.post', ['id' => $recette->id] ) }}">
+                <form method="POST" action="{{ route('recettes.ajout.post', ['recette' => $recette] ) }}">
                     @csrf
                     <div class="form-group red-border">
                         <label for="titre" class="col-form-label text-md-right">Titre de l'étape</label>

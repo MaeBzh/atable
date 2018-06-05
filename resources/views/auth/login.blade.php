@@ -8,7 +8,7 @@
                 <div class="card-header red darken-3 text-white"><h4>Connexion</h4></div>
 
                 <div class="card-body grey lighten-4">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login.post') }}">
                         @csrf
 
                         <div class="form-group row">

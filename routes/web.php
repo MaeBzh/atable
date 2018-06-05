@@ -11,41 +11,93 @@
 |
 */
 
-Route::get('accueil', 'RecetteController@index')->name('accueil');
-Route::get('ajout_recette', 'RecetteController@afficherFormulaireAjoutRecette')->name('ajout_recette.get');
-Route::post('ajout_recette', 'RecetteController@traiterFormulaireAjoutRecette')->name('ajout_recette.post');
-Route::get('ajout_etape_recette/{recette}', 'RecetteController@afficherFormulaireAjoutEtapeRecette')->name('ajout_etape_recette.get');
-Route::post('ajout_etape_recette/{recette}', 'RecetteController@traiterFormulaireAjoutEtapeRecette')->name('ajout_etape_recette.post');
-Route::get('consulter_recette/{recette}', 'RecetteController@afficherRecette')->name('consulter_recette.get');
-Route::post('search', 'RecetteController@chercherRecette')->name('search.post');
+// Routes Membres
+Route::middleware(['auth'])->group(function () {
 
-Route::get('dashboard', 'UserController@afficherDashboard')->name('dashboard');
-Route::get('profil/{user}', 'UserController@afficherProfil')->name('profil');
-Route::post('update_profil', 'UserController@updateProfil')->name('update_profil.post');
+    // Membre connecté
+    Route::get('profil/{user}', 'Membre\UtilisateurController@afficherProfil')
+        ->name('profil');
 
+    Route::post('profil/{user}', 'Membre\UtilisateurController@modifierProfil')
+        ->name('profil.post');
 
-// Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+    // Recettes
+    Route::prefix('recettes')->group(function () {
+        Route::get('nouvelle_recette', 'Membre\RecetteController@afficherCreerRecette')
+            ->name('recettes.ajout');
 
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
+        Route::post('nouvelle_recette', 'Membre\RecetteController@creerRecette')
+            ->name('recettes.ajout.post');
 
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+        Route::get('{recette}/nouvelle_etape', 'Membre\RecetteController@afficherCreerEtape')
+            ->name('recettes.etapes.ajout');
 
-//admin
-//TODO authorize if admin
-Route::prefix('admin')->group(function(){
-    Route::get('gestion/utilisateurs', 'AdminController@afficherGestionUtilisateurs')->name('admin.gestion.utilisateurs.get');
-    Route::get('gestion/categories', 'AdminController@afficherGestionCategories')->name('admin.gestion.categories.get');
-    Route::get('gestion/recettes', 'AdminController@afficherGestionRecettes')->name('admin.gestion.recettes.get');
-    Route::get('gestion/ingredients', 'AdminController@afficherGestionIngredients')->name('admin.gestion.ingredients.get');
-    Route::get('stats/utilisateurs', 'AdminController@afficherStatsUtilisateurs')->name('admin.stats.utilisateurs.get');
-    Route::get('stats/recettes', 'AdminController@afficherStatsRecettes')->name('admin.stats.recettes.get');
+        Route::post('{recette}/nouvelle_etape', 'Membre\RecetteController@creerEtape')
+            ->name('recettes.etapes.ajout.post');
+    });
 });
+
+
+// Routes Admin
+Route::prefix('admin')->middleware(['auth', 'auth.admin'])->group(function () {
+    Route::prefix('gestion')->group(function () {
+        Route::prefix('utilisateurs')->group(function () {
+            Route::get('', 'Admin\AdminUtilisateurController@afficherGestionUtilisateurs')
+                ->name('admin.gestion.utilisateurs');
+
+            Route::post('{user}/activer', 'Admin\AdminUtilisateurController@traiterFormulaireActiverUtilisateur')
+                ->name('admin.gestion.utilisateurs.activer.post');
+
+            Route::post('{user}/desactiver', 'Admin\AdminUtilisateurController@traiterFormulaireDesactiverUtilisateur')
+                ->name('admin.gestion.utilisateurs.desactiver.post');
+
+            Route::post('{user}/supprimer', 'Admin\AdminUtilisateurController@supprimerUtilisateur')
+                ->name('admin.gestion.utilisateurs.supprimer.post');
+        });
+
+        Route::prefix('categories')->group(function () {
+            Route::get('', 'Admin\AdminCategorieController@afficherGestionCategories')
+                ->name('admin.gestion.categories');
+            Route::post('{categorie}/supprimer', 'Admin\AdminCategorieController@supprimerCategorie')
+                ->name('admin.gestion.categories.supprimer.post');
+            Route::get('afficherAjoutCategorie', 'Admin\AdminCategorieController@afficherAjoutCategorie')->name('admin.gestion.categorie.ajout');
+            Route::post('traiterAjoutCategorie', 'Admin\AdminCategorieController@traiterAjoutCategorie')->name('admin.gestion.categorie.ajout.post');
+        });
+
+        Route::prefix('ingredients')->group(function () {
+            Route::get('', 'Admin\AdminIngredientController@afficherGestionIngredients')
+                ->name('admin.gestion.ingredients');
+        });
+
+        Route::prefix('recettes')->group(function () {
+            Route::get('', 'Admin\AdminRecetteController@afficherGestionRecettes')
+                ->name('admin.gestion.recettes');
+            Route::post('{recette}/supprimer', 'Admin\AdminRecetteController@supprimerRecette')
+                ->name('admin.gestion.recettes.supprimer.post');
+        });
+    });
+
+    Route::prefix('statistiques')->group(function () {
+        Route::get('utilisateurs',
+            'Admin\AdminStatistiqueController@afficherStatsUtilisateurs')
+            ->name('admin.stats.utilisateurs');
+
+        Route::get('recettes', 'Admin\AdminStatistiqueController@afficherStatsRecettes')
+            ->name('admin.stats.recettes');
+    });
+});
+
+
+// Routes public
+Route::get('/', function () {
+    return redirect()->route("accueil");
+});
+
+Route::get('accueil', 'HomeController@index')
+    ->name('accueil');
+
+Route::post('recettes/rechercher', 'Membre\RecetteController@rechercherRecette')
+    ->name('recettes.rechercher.post');
+
+Route::get('recettes/{recette}', 'Membre\RecetteController@afficherRecette')
+    ->name('recettes.consulter');

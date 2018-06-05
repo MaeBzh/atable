@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body p-1 px-md-5 m-1 m-md-5 text-md-left">
-                <form method="POST" action="{{ route('ajout_recette.post') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('recettes.ajout.post') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -19,8 +19,8 @@
 
                         @if ($errors->has('titre'))
                             <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('titre') }}</strong>
-                                    </span>
+                                <strong>{{ $errors->first('titre') }}</strong>
+                            </span>
                         @endif
                     </div>
 
@@ -33,7 +33,7 @@
                             @foreach(\App\Categorie::categoriesPrincipales() as $categorie_principale)
                                 <optgroup label="{{ucfirst($categorie_principale->libelle_categorie)}}">
                                     @foreach($categorie_principale->sousCategories as $categorie)
-                                        <option value="{{$categorie->libelle_categorie}}">{{ucfirst($categorie->libelle_categorie)}}</option>
+                                        <option value="{{$categorie->id}}">{{ucfirst($categorie->libelle_categorie)}}</option>
                                     @endforeach
                                 </optgroup>
                             @endforeach
@@ -112,7 +112,8 @@
 
                             <div class="form-check pl-0" data-toggle="tooltip" data-placement="left"
                                  title="Normale">
-                                <input class="form-check-input regular-radio" type="radio" name="difficulte" id="normale"
+                                <input class="form-check-input regular-radio" type="radio" name="difficulte"
+                                       id="normale"
                                        value="normale">
                                 <label class="form-check-label" for="normale">
                                     <span class="icon-toque icone_difficulte"></span>

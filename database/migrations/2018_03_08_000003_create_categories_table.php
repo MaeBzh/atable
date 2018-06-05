@@ -19,7 +19,10 @@ class CreateCategoriesTable extends Migration
             $table->unsignedInteger('categorie_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('categorie_id')->references('id')->on('categories');
+            $table->foreign('categorie_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('restrict');
         });
     }
 

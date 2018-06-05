@@ -1,9 +1,6 @@
 <?php
 
 return [
-
-    'admin_default_route' => env('ADMIN_DEFAULT_ROUTE'),
-
     /*
     |--------------------------------------------------------------------------
     | Application Name

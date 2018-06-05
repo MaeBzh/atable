@@ -17,7 +17,7 @@
                     <p class="card-text">Some quick example text to build on the card title and make up
                         the bulk of the card's content.</p>
                     <!-- Button -->
-                    <a href="{{route("consulter_recette.get", ['id' => $recette_du_jour->recette->id])}}"
+                    <a href="{{route("recettes.consulter", ['recette' => $recette_du_jour->recette])}}"
                        class="btn btn-red darken-3">Lire la suite</a>
                 </div>
             </div>
