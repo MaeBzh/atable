@@ -8,19 +8,18 @@
             </div>
 
             <div class="card-body p-1 px-md-5 m-1 m-md-5 text-md-left">
-                <form method="POST" action="{{ route('admin.gestion.categorie.ajout.post') }}"
-                      enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.gestion.categories.ajout.post') }}">
                     @csrf
 
                     <div class="form-group">
-                        <label for="titre" class="col-form-label text-md-right">Titre</label>
-                        <input id="titre" type="text"
-                               class="form-control{{ $errors->has('titre') ? ' is-invalid' : '' }}"
-                               name="titre" value="{{ old('titre') }}" required="required" autofocus>
+                        <label for="libelle_categorie" class="col-form-label text-md-right">Titre</label>
+                        <input id="libelle_categorie" type="text"
+                               class="form-control{{ $errors->has('libelle_categorie') ? ' is-invalid' : '' }}"
+                               name="libelle_categorie" value="{{ old('libelle_categorie') }}" required="required" autofocus>
 
-                        @if ($errors->has('titre'))
+                        @if ($errors->has('libelle_categorie'))
                             <span class="invalid-feedback">
-                                <strong>{{ $errors->first('titre') }}</strong>
+                                <strong>{{ $errors->first('libelle_categorie') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -28,26 +27,19 @@
                     <div class="form-group">
                         <label for="categorie" class="col-form-label text-md-right">Catégorie parent</label>
                         <select class="form-control {{ $errors->has('categorie') ? ' is-invalid' : '' }}"
-                                name="categorie" value="{{ old('categorie') }}" required="required" autofocus
+                                name="categorie" value="{{ old('categorie') }}" autofocus
                                 id="categorie">
-                            <option>Aucune</option>
+                            <option selected value="">Aucune (Nouvelle catégorie parent)</option>
 
                             @foreach(\App\Categorie::categoriesPrincipales() as $categorie_principale)
-                                <option label="{{ucfirst($categorie_principale->libelle_categorie)}}">
-                                </option>
-                                @foreach($categorie_principale->sousCategories as $categorie)
-                                    <option value="{{$categorie->id}}">{{ucfirst($categorie->libelle_categorie)}}</option>
-                                @endforeach
+                                <option value="{{$categorie_principale->id}}">{{ucfirst($categorie_principale->libelle_categorie)}}</option>
                             @endforeach
-
-
-
                         </select>
 
                         @if ($errors->has('categorie'))
                             <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('categorie') }}</strong>
-                                    </span>
+                                <strong>{{ $errors->first('categorie') }}</strong>
+                            </span>
                         @endif
                     </div>
 

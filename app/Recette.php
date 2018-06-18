@@ -75,11 +75,6 @@ class Recette extends Model
         return $this->hasMany(Etape::class);
     }
 
-    public function likers()
-    {
-        return $this->belongsToMany(User::class, 'recette_user');
-    }
-
     public function recettesDuJour()
     {
         return $this->hasMany(RecetteDuJour::class);

@@ -22,7 +22,7 @@ class CreateCategoriesTable extends Migration
             $table->foreign('categorie_id')
                 ->references('id')
                 ->on('categories')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
         });
     }
 

@@ -20,10 +20,9 @@ class AdminRecetteController extends Controller
         return view("admin.stats.recettes");
     }
 
-    public function affichergestionRecettes()
+    public function afficherGestionRecettes()
     {
-        return view("admin.gestion.recettes")
-            ->with("recettes", Recette::all());
+        return view("admin.gestion.recettes");
     }
 
     public function supprimerRecette(Recette $recette){
@@ -32,7 +31,6 @@ class AdminRecetteController extends Controller
             $recette->delete();
             \Session::flash("success", "Recette {$titre} supprimée avec succès");
         } catch (\Exception $e) {
-            dd($e->getMessage());
             Session::flash("error", "Une erreur est survenue");
         }
 

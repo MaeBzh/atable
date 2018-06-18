@@ -21,26 +21,25 @@ class AdminCategorieController extends Controller
      */
     public function afficherGestionCategories()
     {
-        return view('admin.gestion.categories')
-            ->with('categories', Categorie::all());
+        return view('admin.gestion.categories');
     }
 
-    public function supprimerCategorie($categorie)
+    public function supprimerCategorie(Categorie $categorie)
     {
         try {
-            Categorie::destroy($categorie);
-            \Session::flash("success", "La catégorie a été supprimée");
+            $libelle_categorie = ucfirft($categorie->libelle_categorie);
+            $categorie->delete();
+            \Session::flash("success", "La catégorie {$libelle_categorie} a été supprimée");
         } catch (\Exception $e) {
-            dd($e);
             \Session::flash("error", "Une erreur est survenue.");
         }
         return redirect()->route("admin.gestion.categories");
     }
 
 
-    public function afficherAjoutCategorie()
+    public function afficherCreerCategorie()
     {
-        return view('admin.gestion.ajout_categorie');
+        return view('admin.gestion.creer_categorie');
     }
 
     /**
@@ -48,14 +47,16 @@ class AdminCategorieController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Throwable
      */
-    public function traiterAjoutCategorie(Request $request)
+    public function creerCategorie(Request $request)
     {
 
         DB::beginTransaction();
         try {
             $categorie = new Categorie();
-            $categorie->libelle_categorie = $request->titre;
-            $categorie->categoriePrincipale()->associate($request->categorie);
+            $categorie->libelle_categorie = $request->libelle_categorie;
+            if ($request->has('categorie')) {
+                $categorie->categoriePrincipale()->associate($request->categorie);
+            }
             $categorie->saveOrFail();
 
             DB::commit();
@@ -63,8 +64,6 @@ class AdminCategorieController extends Controller
             \Session::flash("success", "Catégorie ajoutée avec succès.");
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
-
             \Session::flash("error", "Une erreur est survenue");
         }
 

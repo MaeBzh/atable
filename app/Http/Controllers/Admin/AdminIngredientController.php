@@ -21,7 +21,49 @@ class AdminIngredientController extends Controller
      */
     public function afficherGestionIngredients()
     {
-        return view('admin.gestion.ingredients')
-            ->with('users', Ingredient::all());
+        return view('admin.gestion.ingredients');
+    }
+
+    public function supprimerIngredient(Ingredient $ingredient)
+    {
+        try {
+            $nom = ucfirst($ingredient->nom);
+            $ingredient->delete();
+            \Session::flash("success", "L'ingrédient {$nom} a été supprimé");
+        } catch (\Exception $e) {
+            \Session::flash("error", "Une erreur est survenue.");
+        }
+        return redirect()->route("admin.gestion.ingredients");
+    }
+
+
+    public function afficherCreerIngredient()
+    {
+        return view('admin.gestion.creer_ingredient');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
+     */
+    public function creerIngredient(Request $request)
+    {
+
+        DB::beginTransaction();
+        try {
+            $ingredient = new Ingredient();
+            $ingredient->nom = $request->nom;
+            $ingredient->saveOrFail();
+
+            DB::commit();
+
+            \Session::flash("success", "Ingrédient ajouté avec succès.");
+        } catch (\Exception $e) {
+            DB::rollback();
+            \Session::flash("error", "Une erreur est survenue");
+        }
+
+        return redirect()->route('admin.gestion.ingredients');
     }
 }

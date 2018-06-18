@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Membre;
 
 use App\Http\Controllers\Controller;
+use App\Recette;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,8 +41,29 @@ class UtilisateurController extends Controller
 
                 \Session::flash("error", "Une erreur est survenue");
             }
-
-            return redirect()->route('accueil');
         }
+        return redirect()->route('accueil');
+    }
+
+    public function afficherMesRecettes(){
+
+        $mes_recettes = \Auth::user()->recettes()->orderByDesc('id')->get();
+
+        return view("membre.utilisateurs.mes_recettes")
+            ->with("mes_recettes", $mes_recettes);
+    }
+
+    public function supprimerRecette(Recette $recette){
+        if($recette->auteur()->first()->id == \Auth::user()->id){
+            try{
+                $titre = ucfirst($recette->titre);
+                $recette->delete();
+                \Session::flash("success", "La recette $titre a été supprimée avec succès.");
+            }catch (\Exception $e){
+                \Session::flash("error", "Une erreur est survenue");
+            }
+        }
+
+        return redirect()->route("mes_recettes");
     }
 }

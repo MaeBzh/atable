@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Categorie;
+use App\Ingredient;
 use App\Recette;
 use App\User;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +36,12 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::pattern('user', '[0-9]+');
         Route::model("user", User::class);
+
+        Route::pattern('categorie', '[0-9]+');
+        Route::model("categorie", Categorie::class);
+
+        Route::pattern('ingredient', '[0-9]+');
+        Route::model("ingredient", Ingredient::class);
     }
 
     /**

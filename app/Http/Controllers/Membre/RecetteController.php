@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Membre;
 
+use App\Categorie;
 use App\Etape;
 use App\Http\Controllers\Controller;
 use App\Photo;
@@ -24,7 +25,8 @@ class RecetteController extends Controller
         $this->middleware('auth', [
             'except' => [
                 'afficherRecette',
-                'chercherRecette'
+                'rechercherRecette',
+                'resultatRechercherRecette'
             ]
         ]);
     }
@@ -51,11 +53,20 @@ class RecetteController extends Controller
     {
         $search = $request->get('search', "");
 
+        return view('commun.resultats_recherche_recette')
+            ->with('search', $search);
+    }
+
+    public function resultatRechercherRecette(Request $request)
+    {
+
+        $search = $request->get('search', "");
+
         $recettes = Recette::where('titre', 'LIKE', '%' . $search . '%')->get();
 
-        return view('commun.resultats_recherche_recette')
-            ->with('recettes', $recettes)
-            ->with('search', $search);
+        return view('commun.resultats_recherche_recette_ajax')
+            ->with("search", $search)
+            ->with("recettes", $recettes);
     }
 
     /**
@@ -138,12 +149,16 @@ class RecetteController extends Controller
     {
         DB::beginTransaction();
         try {
-            $user_folder = \Auth::user()->getDossierUser();
-            $chemin = $request->file('photo_etape')->store($user_folder);
 
             $etape = new Etape();
+
+            if ($request->hasFile('photo_etape')) {
+                $user_folder = \Auth::user()->getDossierUser();
+                $chemin = $request->file('photo_etape')->store($user_folder);
+                $etape->photo = $chemin;
+            }
+
             $etape->titre = $request->titre;
-            $etape->photo = $chemin;
             $etape->description = $request->description;
             $etape->recette()->associate($recette);
             $etape->saveOrFail();
@@ -172,5 +187,16 @@ class RecetteController extends Controller
                 "recette" => $recette
             ]);
         }
+    }
+
+    public function recetteCategorie(Request $request)
+    {
+        return view("commun.recettes_categorie");
+    }
+
+    public function resultatRecetteCategorie(Request $request)
+    {
+        return view('commun.recettes_categorie_ajax')
+            ->with("recettes", Recette::where('categorie_id', $request->categorie_id)->get());
     }
 }

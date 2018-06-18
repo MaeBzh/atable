@@ -7,8 +7,10 @@
 
 require('./bootstrap');
 require('datatables.net-bs4');
-require('./navbar.search.js');
-require('./profil.edit.js');
+require('./navbar.search');
+require('./profil.edit');
+require('./recherche.ajax');
+require('./recette_categorie.ajax');
 
 // Affichage des tooltips au survol de la souris
 $(function () {

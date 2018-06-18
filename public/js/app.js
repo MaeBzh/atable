@@ -12995,7 +12995,7 @@ Popper.Defaults = Defaults;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(4);
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(16);
 
 
 /***/ }),
@@ -13013,6 +13013,8 @@ __webpack_require__(5);
 __webpack_require__(10);
 __webpack_require__(12);
 __webpack_require__(13);
+__webpack_require__(14);
+__webpack_require__(15);
 
 // Affichage des tooltips au survol de la souris
 $(function () {
@@ -49669,6 +49671,71 @@ $(".edit_button_profil").click(function () {
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+
+    // On execute la requete ajax uniquement si le formulaire #formSearchAjax existe sur la page
+    if ($("#formSearchAjax").length !== 0) {
+
+        // On récupère l'url du formulaire
+        var action = $("#formSearchAjax").attr("action");
+
+        // On récupère la method HTTP du formulaire
+        var method = $("#formSearchAjax").attr("method");
+
+        // On serialise les données du formulaire pour les envoyés en ajax
+        var data = $("#formSearchAjax").serialize();
+
+        // On execute la requete ajax
+        $.ajax({
+            type: method,
+            url: action,
+            data: data,
+            success: function success(response) {
+                // On met a jour le contenu de la page par ce que le serveur a renvoyé
+                $("#resultat_recherche").html(response);
+            }
+        });
+    }
+});
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+
+    // On execute la requete ajax uniquement si le formulaire #formSearchAjax existe sur la page
+    $(".recette_categorie").click(function () {
+
+        var recette_categorie = $(this);
+        // On récupère l'url du formulaire
+        var action = $("#formRecetteCategorieAjax").attr("action");
+
+        // On récupère la method HTTP du formulaire
+        var method = $("#formRecetteCategorieAjax").attr("method");
+
+        // On serialise les données pour les envoyés en ajax
+        var data = "categorie_id=" + recette_categorie.data('id');
+
+        // On execute la requete ajax
+        $.ajax({
+            type: method,
+            url: action,
+            data: data,
+            success: function success(response) {
+                // On met a jour le contenu de la page par ce que le serveur a renvoyé
+                $("#resultat_recettes_categorie").html(response);
+                $(".recette_categorie").removeClass("red text-white");
+                recette_categorie.addClass("red text-white");
+            }
+        });
+    });
+});
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

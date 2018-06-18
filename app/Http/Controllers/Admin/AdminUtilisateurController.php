@@ -80,7 +80,6 @@ class AdminUtilisateurController extends Controller
             $user->delete($user->id);
             \Session::flash("success", "Le compte utilisateur a été supprimé");
         } catch (\Exception $e) {
-            dd($e);
             \Session::flash("error", "Une erreur est survenue.");
         }
         return redirect()->route("admin.gestion.utilisateurs");

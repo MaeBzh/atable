@@ -8,7 +8,7 @@
 
             <!--First column-->
             <div class="col-md-6">
-                <h5 class="text-uppercase">Footer Content</h5>
+                <h5 class="">Réalisé par Maelenn Picaud - Cnam 2017/2018</h5>
             </div>
             <!--/.First column-->
 

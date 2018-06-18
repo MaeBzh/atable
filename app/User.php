@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function recettes()
     {
-        return $this->hasMany(Recette::class);
+        return $this->hasMany(Recette::class, "auteur_id");
     }
 
     public function isAdmin()
@@ -76,10 +76,6 @@ class User extends Authenticatable
     public function isMembre()
     {
         return $this->role->isMembre();
-    }
-
-    public function recettesFavorites(){
-        return $this->belongsToMany(Recette::class,  'recette_user');
     }
 
     public function getDossierUser(){

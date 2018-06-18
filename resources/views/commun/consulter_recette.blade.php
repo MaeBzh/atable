@@ -6,7 +6,7 @@
             <div class="col-1"></div>
             <div class="col-2 elegant-color"></div>
             <div class="col-9">
-                <h1 class="titre_recette text-center grey-text py-1">{{$recette->titre}}</h1>
+                <h1 class="titre_recette text-center grey-text py-1">{{ucfirst($recette->titre)}}</h1>
             </div>
         </div>
         <div class="row">
@@ -69,6 +69,14 @@
                 </table>
             </div>
             <div class="col-9">
+                @if(\Auth::user()->isAdmin() == true || \Auth::user()->id == $recette->auteur()->first()->id)
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{{ route("recettes.etapes.ajout", ['recette' => $recette]) }}" class="btn btn-sm btn-outline-red float-right">Ajouter
+                                une étape</a>
+                        </div>
+                    </div>
+                @endif
                 @foreach( $recette->etapes()->get() as $etape)
                     <div class="etape row pr-4">
                         <div class="col-2">

@@ -21,6 +21,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profil/{user}', 'Membre\UtilisateurController@modifierProfil')
         ->name('profil.post');
 
+    Route::get('mes_recettes', 'Membre\UtilisateurController@afficherMesRecettes')
+        ->name('mes_recettes');
+
+    Route::get('mes_recettes/{recette}/supprimer', 'Membre\UtilisateurController@supprimerRecette')
+        ->name('mes_recettes.supprimer.post');
+
     // Recettes
     Route::prefix('recettes')->group(function () {
         Route::get('nouvelle_recette', 'Membre\RecetteController@afficherCreerRecette')
@@ -60,13 +66,21 @@ Route::prefix('admin')->middleware(['auth', 'auth.admin'])->group(function () {
                 ->name('admin.gestion.categories');
             Route::post('{categorie}/supprimer', 'Admin\AdminCategorieController@supprimerCategorie')
                 ->name('admin.gestion.categories.supprimer.post');
-            Route::get('afficherAjoutCategorie', 'Admin\AdminCategorieController@afficherAjoutCategorie')->name('admin.gestion.categorie.ajout');
-            Route::post('traiterAjoutCategorie', 'Admin\AdminCategorieController@traiterAjoutCategorie')->name('admin.gestion.categorie.ajout.post');
+            Route::get('nouvelle_categorie', 'Admin\AdminCategorieController@afficherCreerCategorie')
+                ->name('admin.gestion.categories.ajout');
+            Route::post('nouvelle_categorie', 'Admin\AdminCategorieController@creerCategorie')
+                ->name('admin.gestion.categories.ajout.post');
         });
 
         Route::prefix('ingredients')->group(function () {
             Route::get('', 'Admin\AdminIngredientController@afficherGestionIngredients')
                 ->name('admin.gestion.ingredients');
+            Route::post('{ingredient}/supprimer', 'Admin\AdminIngredientController@supprimerIngredient')
+                ->name('admin.gestion.ingredients.supprimer.post');
+            Route::get('nouvel_ingredient', 'Admin\AdminIngredientController@afficherCreerIngredient')
+                ->name('admin.gestion.ingredients.ajout');
+            Route::post('nouvel_ingredient', 'Admin\AdminIngredientController@creerIngredient')
+                ->name('admin.gestion.ingredients.ajout.post');
         });
 
         Route::prefix('recettes')->group(function () {
@@ -77,14 +91,10 @@ Route::prefix('admin')->middleware(['auth', 'auth.admin'])->group(function () {
         });
     });
 
-    Route::prefix('statistiques')->group(function () {
-        Route::get('utilisateurs',
-            'Admin\AdminStatistiqueController@afficherStatsUtilisateurs')
-            ->name('admin.stats.utilisateurs');
+    Route::get('statistiques', 'Admin\AdminStatistiqueController@afficherStatistiques')
+        ->name('admin.statistiques');
 
-        Route::get('recettes', 'Admin\AdminStatistiqueController@afficherStatsRecettes')
-            ->name('admin.stats.recettes');
-    });
+
 });
 
 
@@ -98,6 +108,13 @@ Route::get('accueil', 'HomeController@index')
 
 Route::post('recettes/rechercher', 'Membre\RecetteController@rechercherRecette')
     ->name('recettes.rechercher.post');
+Route::get('recettes/rechercher/ajax', 'Membre\RecetteController@resultatRechercherRecette')
+    ->name('recettes.rechercher.ajax');
+
+Route::get('recettes/categories', 'Membre\RecetteController@recetteCategorie')
+    ->name('recettes.categories');
+Route::get('recettes/categories/ajax', 'Membre\RecetteController@resultatRecetteCategorie')
+    ->name('recettes.categories.ajax');
 
 Route::get('recettes/{recette}', 'Membre\RecetteController@afficherRecette')
     ->name('recettes.consulter');

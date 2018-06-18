@@ -22,7 +22,17 @@ class IngredientsTableSeeder extends Seeder
             "noix",
             "courgette",
             "sel",
-            "riz"
+            "riz",
+            "pomme de terre",
+            "lait",
+            "citron",
+            "oignon",
+            "ail",
+            "thym",
+            "curry",
+            "eau",
+            "poivre",
+            "oeuf"
         ];
 
         for ($i = 0; $i < count($ingredients); $i++) {

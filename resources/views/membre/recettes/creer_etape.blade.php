@@ -8,7 +8,7 @@
             </div>
 
             <div class="card-body grey lighten-4">
-                <form method="POST" action="{{ route('recettes.ajout.post', ['recette' => $recette] ) }}">
+                <form method="POST" action="{{ route('recettes.etapes.ajout.post', ['recette' => $recette] ) }}">
                     @csrf
                     <div class="form-group red-border">
                         <label for="titre" class="col-form-label text-md-right">Titre de l'étape</label>
@@ -35,10 +35,19 @@
                         @endif
                     </div>
 
+                    <div class="form-group">
+                        <label for="photo" class="col-form-label text-md-right">Photo</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="photo_etape">
+                            <label class="custom-file-label text-left" for="inputGroupFile04">Choisissez un
+                                fichier</label>
+                        </div>
+                    </div>
+
                     <div class="form-group row mb-0 justify-content-center">
                         <div class="col-6">
                             <button type="submit" name="submit" value="autre_etape" class="btn btn-red">
-                                Ajouter une étape
+                                Ajouter une autre étape
                             </button>
                         </div>
                         <div class="col-6">
