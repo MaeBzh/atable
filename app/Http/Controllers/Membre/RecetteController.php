@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Membre;
 
-use App\Categorie;
 use App\Etape;
 use App\Http\Controllers\Controller;
 use App\Photo;
 use App\Recette;
-use App\RecetteDuJour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
 class RecetteController extends Controller
@@ -26,7 +23,9 @@ class RecetteController extends Controller
             'except' => [
                 'afficherRecette',
                 'rechercherRecette',
-                'resultatRechercherRecette'
+                'resultatRechercherRecette',
+                'recetteCategorie',
+                'resultatRecetteCategorie'
             ]
         ]);
     }
@@ -174,7 +173,7 @@ class RecetteController extends Controller
                 ]);
             } else {
                 \Session::flash("success", "Votre recette {$recette->titre} est désormais en ligne");
-                return redirect()->route('accueil');
+                return redirect()->route('recettes.consulter', ['recette' => $recette]);
             }
         } catch (\Exception $e) {
             DB::rollback();

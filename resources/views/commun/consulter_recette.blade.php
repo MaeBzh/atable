@@ -69,10 +69,11 @@
                 </table>
             </div>
             <div class="col-9">
-                @if(\Auth::user()->isAdmin() == true || \Auth::user()->id == $recette->auteur()->first()->id)
+                @if(\Auth::check() && (\Auth::user()->isAdmin() == true || \Auth::user()->id == $recette->auteur()->first()->id))
                     <div class="row">
                         <div class="col-12">
-                            <a href="{{ route("recettes.etapes.ajout", ['recette' => $recette]) }}" class="btn btn-sm btn-outline-red float-right">Ajouter
+                            <a href="{{ route("recettes.etapes.ajout", ['recette' => $recette]) }}"
+                               class="btn btn-sm btn-outline-red float-right">Ajouter
                                 une étape</a>
                         </div>
                     </div>

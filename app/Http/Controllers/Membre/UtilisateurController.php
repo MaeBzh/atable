@@ -22,7 +22,7 @@ class UtilisateurController extends Controller
      * @throws \Exception
      * @throws \Throwable
      */
-    public function traiterFormulaireProfil(User $user, Request $request)
+    public function modifierProfil(User $user, Request $request)
     {
         // On limite la modification du profil à l'utilisateur correspondant et aux admins
         if (\Auth::user()->id == $user->id || \Auth::user()->isAdmin()) {
@@ -42,7 +42,7 @@ class UtilisateurController extends Controller
                 \Session::flash("error", "Une erreur est survenue");
             }
         }
-        return redirect()->route('accueil');
+        return redirect()->route('profil', ['user' => $user]);
     }
 
     public function afficherMesRecettes(){

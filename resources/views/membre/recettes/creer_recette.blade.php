@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label for="photo" class="col-form-label text-md-right">Photo principale</label>
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="photo">
+                            <input type="file" class="custom-file-input" id="inputGroupFile04" name="photo" required>
                             <label class="custom-file-label text-left" for="inputGroupFile04">Choisissez un
                                 fichier</label>
                         </div>

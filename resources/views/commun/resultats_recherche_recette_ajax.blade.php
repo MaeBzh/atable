@@ -28,11 +28,10 @@
                         <h3 class="titre_recette_jour pt-1">{{ucfirst($recette->titre)}}</h3>
                         <!-- Text -->
                         <p class="card-text text-left mb-0">
-                            <b>Titre</b>rd
                             <b>Temps de préparation</b>
-                            : {{ \Carbon\Carbon::parse($recette->temps_preparation)->format("h\h i\m s\s") }}<br>
+                            : {{ \Carbon\Carbon::parse($recette->temps_preparation)->format("h\h i\m") }}<br>
                             <b>Temps de cuisson</b>
-                            : {{ Carbon\Carbon::parse($recette->temps_cuisson)->format("h\h i\m s\s") }}<br>
+                            : {{ Carbon\Carbon::parse($recette->temps_cuisson)->format("h\h i\m") }}<br>
                             <b>Difficulté de réalisation</b> : {{ $recette->difficulte }}<br>
                             <b>Prix</b> : {{ $recette->prix }} <br>
                             <b>Nombre de personnes</b> : {{ $recette->nb_pers }} <br>

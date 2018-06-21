@@ -27,7 +27,7 @@ class AdminCategorieController extends Controller
     public function supprimerCategorie(Categorie $categorie)
     {
         try {
-            $libelle_categorie = ucfirft($categorie->libelle_categorie);
+            $libelle_categorie = ucfirst($categorie->libelle_categorie);
             $categorie->delete();
             \Session::flash("success", "La catégorie {$libelle_categorie} a été supprimée");
         } catch (\Exception $e) {

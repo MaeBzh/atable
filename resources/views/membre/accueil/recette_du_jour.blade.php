@@ -4,7 +4,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-md-5 photo_recette">
                 <!-- Card image -->
-                <img class="img-fluid m-0" src="{{asset("storage/".$recette_du_jour->recette->photo)}}">
+                <img class="img-fluid m-auto" src="{{asset("storage/".$recette_du_jour->recette->photo)}}">
             </div>
             <div class="col-12 col-md-7">
                 <!-- Card content -->

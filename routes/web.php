@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('mes_recettes', 'Membre\UtilisateurController@afficherMesRecettes')
         ->name('mes_recettes');
 
-    Route::get('mes_recettes/{recette}/supprimer', 'Membre\UtilisateurController@supprimerRecette')
+    Route::post('mes_recettes/{recette}/supprimer', 'Membre\UtilisateurController@supprimerRecette')
         ->name('mes_recettes.supprimer.post');
 
     // Recettes

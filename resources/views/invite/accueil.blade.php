@@ -5,7 +5,7 @@
         <a href="{{route("recettes.consulter", ['id' => $recette_du_jour->recette->id])}}"
            class="recette_jour col-9 view overlay zoom z-depth-2"
            onmouseover="$('#infos_supp').show('slow');" onmouseout="$('#infos_supp').hide('slow')">
-            <img src="{{asset("storage/".$recette_du_jour->recette->photo)}}" class="img-fluid"
+            <img src="{{asset("storage/".$recette_du_jour->recette->photo)}}" class="img-fluid m-auto"
                  alt="Sample image with waves effect.">
             <div class="mask flex-center waves-effect waves-light">
             </div>
