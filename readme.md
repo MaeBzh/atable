@@ -13,7 +13,7 @@ Dans un terminal, exécuter les commandes suivantes :
 * taper `composer install` pour télécharger les dépendances PHP
 * taper `composer update` pour être sur que tous les packages sont à jour
 * taper `npm install` pour télécharger les dépendances JS
-* copier *.env.example* to *.env*
+* vérifier l'existance du fichier *.env* à la racine du projet, s'il n'existe pas, renommer *.env.example* en *.env*
 * taper `php artisan storage:link` pour pouvoir accéder aux photos enregistrées dans le dossier storage
 * taper `php artisan key:generate` pour générer une clé (`APP_KEY`) dans le fichier *.env*
 * configurer les options de connexion à la base de données dans le fichier *.env* :
